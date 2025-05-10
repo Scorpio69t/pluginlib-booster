@@ -15,18 +15,15 @@
     #define PLUGIN_EXT ".so"
 #endif
 
-#define REGISTER_PLUGIN_FACTORY(CLASS) \
-class CLASS##Factory : public pluginlib::PluginFactory<pluginlib::PluginInterface> { \
-public: \
-pluginlib::PluginInterfacePtr create() override { \
-return std::make_shared<CLASS>(); \
-} \
-void destroy(pluginlib::PluginInterfacePtr instance) override { \
-instance.reset(); \
-} \
-}; \
-extern "C" pluginlib::PluginFactoryPtr<pluginlib::PluginInterface> create_plugin_factory() { \
-return std::make_shared<CLASS##Factory>(); \
+#if defined(_WIN32)
+  #define EXPORT_PLUGIN __declspec(dllexport)
+#else
+#define EXPORT_PLUGIN __attribute__((visibility("default")))
+#endif
+
+#define REGISTER_PLUGIN_FACTORY(FactoryClass)                          \
+extern "C" EXPORT_PLUGIN pluginlib::IPluginFactory* create_plugin_factory() { \
+return new FactoryClass();                                         \
 }
 
 #endif //PLUGIN_MACRO_H

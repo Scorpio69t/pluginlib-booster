@@ -1,0 +1,7 @@
+{
+  "name": "Logger",
+  "version": "1.0.0",
+  "author": "Ryan",
+  "description": "A simple console logger plugin",
+  "library": "logger_plugin"
+}

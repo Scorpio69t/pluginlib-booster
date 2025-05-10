@@ -26,18 +26,14 @@ namespace pluginlib {
 
     using PluginInterfacePtr = std::shared_ptr<PluginInterface>;
 
-    template<typename T>
-    class PluginFactory {
+    class IPluginFactory {
     public:
-        virtual ~PluginFactory() = default;
+        virtual ~IPluginFactory() = default;
 
-        virtual std::shared_ptr<T> create() = 0;
-
-        virtual void destroy(std::shared_ptr<T> instance) = 0;
+        virtual PluginInterfacePtr create() = 0;
     };
 
-    template<typename T>
-    using PluginFactoryPtr = std::shared_ptr<PluginFactory<T> >;
+    using PluginFactoryPtr = std::shared_ptr<IPluginFactory>;
 } // namespace pluginlib
 
 #endif //PLUGIN_INTERFACE_H

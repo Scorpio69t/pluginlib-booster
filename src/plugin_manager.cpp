@@ -4,12 +4,15 @@
 
 #include "pluginlib/plugin_manager.h"
 #include "pluginlib/plugin_macro.h"
+#include "pluginlib/plugin_metadata.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 
 namespace pluginlib {
-    void PluginManager::load_plugins(const std::string &directory) {
-        namespace fs = boost::filesystem;
+    namespace fs = boost::filesystem;
+    using json = nlohmann::json;
 
+    void PluginManager::load_plugins(const std::string &directory) {
         if (!fs::exists(directory) || !fs::is_directory(directory)) {
             throw std::runtime_error("Directory does not exist or is not a directory: " + directory);
         }
@@ -27,13 +30,8 @@ namespace pluginlib {
 
             try {
                 boost::dll::shared_library lib(path.string(), boost::dll::load_mode::append_decorations);
-                const auto factory_loader = lib.get<PluginFactoryPtr<PluginInterface>(*)()>("create_plugin_factory");
-                if (!factory_loader) {
-                    std::cerr << "[PluginManager] Failed to load factory from " << path.string() << std::endl;
-                    continue;
-                }
-
-                const PluginFactoryPtr<PluginInterface> factory = factory_loader();
+                auto factory_fn = lib.get<IPluginFactory*(*)()>("create_plugin_factory");
+                auto* factory = factory_fn();
 
                 if (PluginInterfacePtr plugin = factory->create(); plugin && plugin->initialize()) {
                     std::string plugin_name = plugin->name();
