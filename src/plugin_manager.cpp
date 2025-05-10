@@ -49,4 +49,19 @@ namespace pluginlib {
 
         std::cout << "[PluginManager] Loaded " << count << " plugins" << std::endl;
     }
+
+    void PluginManager::unload_plugins() {
+        plugins_.clear();
+        loaded_libraries_.clear();
+        std::cout << "[PluginManager] Unloaded all plugins" << std::endl;
+    }
+
+    void PluginManager::run_all() {
+        for (const auto &[name, plugin]: plugins_) {
+            std::cout << "[Plugin] " << name
+                    << " | Version: " << plugin->version()
+                    << " | Author: " << plugin->author() << std::endl
+                    << "Description: " << plugin->description() << std::endl;
+        }
+    }
 }
