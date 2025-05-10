@@ -16,3 +16,4 @@ message(STATUS "Boost_VERSION: ${Boost_VERSION}")
 include_directories(include)
 include_directories(${Boost_INCLUDE_DIRS})
 
+add_subdirectory(src)

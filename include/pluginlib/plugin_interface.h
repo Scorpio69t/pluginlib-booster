@@ -10,27 +10,34 @@
 
 namespace pluginlib {
     class PluginInterface {
-        public:
-virtual ~PluginInterface() = default;
-virtual std::string name() const = 0;
-virtual std::string version() const = 0;
-virtual std::string description() const = 0;
-vitual std::string author() const = 0;
-virtual bool initialize() = 0;
+    public:
+        virtual ~PluginInterface() = default;
+
+        virtual std::string name() const = 0;
+
+        virtual std::string version() const = 0;
+
+        virtual std::string description() const = 0;
+
+        virtual std::string author() const = 0;
+
+        virtual bool initialize() = 0;
     };
 
-using PluginInterfacePtr = std::shared_ptr<PluginInterface>;
+    using PluginInterfacePtr = std::shared_ptr<PluginInterface>;
 
     template<typename T>
     class PluginFactory {
-        public:
-            virtual ~PluginFactory() = default;
-            virtual std::shared_ptr<T> create() = 0;
-            virtual void destroy(std::shared_ptr<T> instance) = 0;
+    public:
+        virtual ~PluginFactory() = default;
+
+        virtual std::shared_ptr<T> create() = 0;
+
+        virtual void destroy(std::shared_ptr<T> instance) = 0;
     };
 
     template<typename T>
-    using PluginFactoryPtr = std::shared_ptr<PluginFactory<T>>;
+    using PluginFactoryPtr = std::shared_ptr<PluginFactory<T> >;
 } // namespace pluginlib
 
 #endif //PLUGIN_INTERFACE_H
