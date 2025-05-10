@@ -7,6 +7,14 @@
 
 #include "plugin_interface.h"
 
+#if defined(_WIN32)
+    #define PLUGIN_EXT ".dll"
+#elif defined(__APPLE__)
+#define PLUGIN_EXT ".dylib"
+#else
+    #define PLUGIN_EXT ".so"
+#endif
+
 #define REGISTER_PLUGIN_FACTORY(CLASS) \
 class CLASS##Factory : public pluginlib::PluginFactory<pluginlib::PluginInterface> { \
 public: \
