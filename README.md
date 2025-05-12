@@ -62,6 +62,6 @@ cd pluginlib-booster
 mkdir build && cd build
 cmake ..
 make -j
-./tests/plugin_test
+./plugin_test
 ```
 
