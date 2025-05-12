@@ -13,6 +13,8 @@ int main() {
         std::cout << "[Main] Plugin loaded: " << logger->name() << std::endl;
     }
 
+    manager.run_all();
+
     return 0;
 }
 

@@ -8,9 +8,18 @@
 #include <string>
 #include <memory>
 
+#ifdef WIN32
+#define PLUGINLIB_API __declspec(dllexport)
+#else
+#define PLUGINLIB_API
+#endif // WIN32
+
+
 namespace pluginlib {
     class PluginInterface {
     public:
+        PluginInterface() = default;
+
         virtual ~PluginInterface() = default;
 
         virtual std::string name() const = 0;
@@ -35,5 +44,15 @@ namespace pluginlib {
 
     using PluginFactoryPtr = std::shared_ptr<IPluginFactory>;
 } // namespace pluginlib
+
+#ifdef __cplusplus
+extern "C" {
+#endif //__cplusplus
+
+PLUGINLIB_API pluginlib::PluginFactoryPtr create_plugin_factory();
+
+#ifdef __cplusplus
+}
+#endif //__cplusplus
 
 #endif //PLUGIN_INTERFACE_H

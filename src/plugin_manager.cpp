@@ -30,8 +30,8 @@ namespace pluginlib {
 
             try {
                 boost::dll::shared_library lib(path.string(), boost::dll::load_mode::append_decorations);
-                auto factory_fn = lib.get<IPluginFactory*(*)()>("create_plugin_factory");
-                auto* factory = factory_fn();
+                auto factory_fn = lib.get<PluginFactoryPtr()>("create_plugin_factory");
+                auto factory = factory_fn();
 
                 if (PluginInterfacePtr plugin = factory->create(); plugin && plugin->initialize()) {
                     std::string plugin_name = plugin->name();

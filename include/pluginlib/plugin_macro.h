@@ -12,18 +12,13 @@
 #elif defined(__APPLE__)
 #define PLUGIN_EXT ".dylib"
 #else
-    #define PLUGIN_EXT ".so"
-#endif
-
-#if defined(_WIN32)
-  #define EXPORT_PLUGIN __declspec(dllexport)
-#else
-#define EXPORT_PLUGIN __attribute__((visibility("default")))
+#define PLUGIN_EXT ".so"
 #endif
 
 #define REGISTER_PLUGIN_FACTORY(FactoryClass)                          \
-extern "C" EXPORT_PLUGIN pluginlib::IPluginFactory* create_plugin_factory() { \
-return new FactoryClass();                                         \
+extern "C"   \
+PLUGINLIB_API pluginlib::PluginFactoryPtr create_plugin_factory() { \
+return std::make_shared<FactoryClass>(); \
 }
 
 #endif //PLUGIN_MACRO_H
