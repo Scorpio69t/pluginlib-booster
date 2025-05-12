@@ -25,10 +25,8 @@ namespace pluginlib {
 
         template<typename Plugin>
         std::shared_ptr<Plugin> get_plugin(const std::string &name) {
-            auto it = plugins_.find(name);
-            if (it != plugins_.end()) {
-                auto plugin = std::dynamic_pointer_cast<Plugin>(it->second);
-                if (plugin) {
+            if (const auto it = plugins_.find(name); it != plugins_.end()) {
+                if (auto plugin = std::dynamic_pointer_cast<Plugin>(it->second)) {
                     return plugin;
                 }
                 throw std::runtime_error("Plugin found but type mismatch");
