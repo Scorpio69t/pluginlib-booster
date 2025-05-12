@@ -22,13 +22,13 @@ namespace pluginlib {
 
         virtual ~PluginInterface() = default;
 
-        virtual std::string name() const = 0;
+        [[nodiscard]] virtual std::string name() const = 0;
 
-        virtual std::string version() const = 0;
+        [[nodiscard]] virtual std::string version() const = 0;
 
-        virtual std::string description() const = 0;
+        [[nodiscard]] virtual std::string description() const = 0;
 
-        virtual std::string author() const = 0;
+        [[nodiscard]] virtual std::string author() const = 0;
 
         virtual bool initialize() = 0;
     };

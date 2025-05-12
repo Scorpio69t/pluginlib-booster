@@ -8,12 +8,12 @@
 
 using namespace pluginlib;
 
-class LoggerPlugin : public PluginInterface {
+class LoggerPlugin final : public PluginInterface {
 public:
-    std::string name() const override { return "Logger"; }
-    std::string version() const override { return "1.0.0"; }
-    std::string description() const override { return "A simple console logger plugin"; }
-    std::string author() const override { return "Ryan"; }
+    [[nodiscard]] std::string name() const override { return "Logger"; }
+    [[nodiscard]] std::string version() const override { return "1.0.0"; }
+    [[nodiscard]] std::string description() const override { return "A simple console logger plugin"; }
+    [[nodiscard]] std::string author() const override { return "Ryan"; }
 
     bool initialize() override {
         std::cout << "[LoggerPlugin] Initialized successfully.\n";
