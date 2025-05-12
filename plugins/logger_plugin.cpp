@@ -21,11 +21,4 @@ public:
     }
 };
 
-class LoggerPluginFactory : public IPluginFactory {
-public:
-    PluginInterfacePtr create() override {
-        return std::make_shared<LoggerPlugin>();
-    }
-};
-
-REGISTER_PLUGIN_FACTORY(LoggerPluginFactory)
+REGISTER_PLUGIN_FACTORY(LoggerPlugin)

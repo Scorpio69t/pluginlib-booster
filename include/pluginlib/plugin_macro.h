@@ -15,10 +15,16 @@
 #define PLUGIN_EXT ".so"
 #endif
 
-#define REGISTER_PLUGIN_FACTORY(FactoryClass)                          \
+#define REGISTER_PLUGIN_FACTORY(CLASS)                          \
+class CLASS##Factory : public pluginlib::IPluginFactory {   \
+public: \
+pluginlib::PluginInterfacePtr create() override {   \
+    return std::make_shared<CLASS>();    \
+}   \
+};  \
 extern "C"   \
 PLUGINLIB_API pluginlib::PluginFactoryPtr create_plugin_factory() { \
-return std::make_shared<FactoryClass>(); \
+return std::make_shared<CLASS##Factory>(); \
 }
 
 #endif //PLUGIN_MACRO_H
